@@ -7,13 +7,13 @@ Traceback (most recent call last):
 ParseException:
 
 >>> drushmake.parseline('#')['comment']
-([''], {})
+''
 
 >>> drushmake.parseline(' #')['comment']
-([''], {})
+''
 
 >>> drushmake.parseline(' # and some text')['comment']
-(['and some text'], {})
+'and some text'
 
 >>> drushmake.parseline('api = 2')['api']
 '2'
@@ -23,7 +23,7 @@ ParseException:
 
 >>> result = drushmake.parseline('api = 1# comment')
 >>> (result['api'], result['comment'])
-('1', (['comment'], {}))
+('1', 'comment')
 
 >>> drushmake.parseline('core = 7.x')['core']
 (['7.x'], {})
