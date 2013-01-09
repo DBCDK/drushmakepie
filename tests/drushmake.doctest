@@ -15,6 +15,12 @@ ParseException:
 >>> drushmake.parseline(' # and some text')['comment']
 'and some text'
 
+>>> drushmake.parseline(' ;')['comment']
+''
+
+>>> drushmake.parseline(' ; and some text')['comment']
+'and some text'
+
 >>> drushmake.parseline('api = 2')['api']
 '2'
 

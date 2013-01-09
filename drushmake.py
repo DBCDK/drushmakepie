@@ -4,7 +4,7 @@ from pyparsing import *
 LBRCKT = Literal('[').suppress()
 RBRCKT = Literal(']').suppress()
 EQUAL = Literal('=').suppress()
-HASH = Literal('#').suppress()
+HASH = oneOf('# ;').suppress()
 API = Keyword('api').suppress()
 CORE = Keyword('core').suppress()
 PROJECTS = Keyword('projects').suppress()
