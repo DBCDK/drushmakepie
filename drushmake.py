@@ -13,6 +13,7 @@ TYPE = Keyword('type').suppress()
 PATCH = Keyword('patch').suppress()
 URL = Keyword('url').suppress()
 MD5 = Keyword('md5').suppress()
+SUBDIR = Keyword('subdir').suppress()
 
 # Helper functions
 def brackets(x):
@@ -44,7 +45,8 @@ patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name
 patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + Word(hexnums)('md5')
 patch = brackets(PATCH) + (patch_url | patch_md5)
 
-projects = (PROJECTS + brackets(name) + (patch | types | version))('projects')
+subdir = brackets(SUBDIR) + EQUAL + Word(printables)('subdir')
+projects = (PROJECTS + brackets(name) + (patch | subdir | types | version))('projects')
 
 makefile_grammar = (comment | ((api | core | projects) + Optional(comment))) + stringEnd
 

@@ -80,3 +80,6 @@ ParseException:
 
 >>> drushmake.parseline('projects[my_module][patch][pname][md5] = 0123456789abcdef')['projects']
 (['my_module', 'pname', '0123456789abcdef'], {'patch': [('pname', 1)], 'name': [('my_module', 0)], 'md5': [('0123456789abcdef', 2)]})
+
+>>> drushmake.parseline('projects[my_module][subdir] = some_dir/one-more-dir')['projects']
+(['my_module', 'some_dir/one-more-dir'], {'name': [('my_module', 0)], 'subdir': [('some_dir/one-more-dir', 1)]})
