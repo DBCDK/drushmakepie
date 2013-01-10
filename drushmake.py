@@ -11,6 +11,8 @@ PROJECTS = Keyword('projects').suppress()
 VERSION = Keyword('version').suppress()
 TYPE = Keyword('type').suppress()
 PATCH = Keyword('patch').suppress()
+URL = Keyword('url').suppress()
+MD5 = Keyword('md5').suppress()
 
 # Helper functions
 def brackets(x):
@@ -37,8 +39,10 @@ version = short_version | long_version
 
 types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
 
-
-patch = brackets(PATCH) + EQUAL + Word(printables)('patch')
+patch_name = Word(alphas, alphanums + '_-')('patch')
+patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name))) + EQUAL + Word(printables)('url')
+patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + Word(hexnums)('md5')
+patch = brackets(PATCH) + (patch_url | patch_md5)
 
 projects = (PROJECTS + brackets(name) + (patch | types | version))('projects')
 
