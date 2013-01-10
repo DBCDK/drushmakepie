@@ -9,6 +9,11 @@ API = Keyword('api').suppress()
 CORE = Keyword('core').suppress()
 PROJECTS = Keyword('projects').suppress()
 VERSION = Keyword('version').suppress()
+TYPE = Keyword('type').suppress()
+
+# Helper functions
+def brackets(x):
+  return LBRCKT + x + RBRCKT
 
 # Comment
 optional_text = Combine(Optional(Word(printables + ' ')))
@@ -24,10 +29,14 @@ core = CORE + EQUAL + major_x('core')
 
 # Projects
 name = Word(alphas, alphanums + '_')('name')
+
 short_version = EQUAL + Combine(Word(nums) + Literal('.') + Word(nums))('version')
-long_version = LBRCKT + VERSION + RBRCKT + short_version
+long_version = brackets(VERSION) + short_version
 version = short_version | long_version
-projects = (PROJECTS + LBRCKT + name + RBRCKT + version)('projects')
+
+types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
+
+projects = (PROJECTS + brackets(name) + (types | version))('projects')
 
 
 makefile_grammar = comment | ((api | core | projects) + Optional(comment))
