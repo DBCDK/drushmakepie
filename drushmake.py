@@ -14,6 +14,8 @@ PATCH = Keyword('patch').suppress()
 URL = Keyword('url').suppress()
 MD5 = Keyword('md5').suppress()
 SUBDIR = Keyword('subdir').suppress()
+OVERWRITE = Keyword('overwrite').suppress()
+TRUTH = oneOf('TRUE FALSE')
 
 # Helper functions
 def brackets(x):
@@ -46,7 +48,11 @@ patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + Word(hexnums)('md5')
 patch = brackets(PATCH) + (patch_url | patch_md5)
 
 subdir = brackets(SUBDIR) + EQUAL + Word(printables)('subdir')
-projects = (PROJECTS + brackets(name) + (patch | subdir | types | version))('projects')
+
+overwrite = brackets(OVERWRITE) + EQUAL + TRUTH('overwrite')
+
+project_options = overwrite | patch | subdir | types | version
+projects = (PROJECTS + brackets(name) + project_options)('projects')
 
 makefile_grammar = (comment | ((api | core | projects) + Optional(comment))) + stringEnd
 

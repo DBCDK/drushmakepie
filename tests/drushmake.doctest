@@ -83,3 +83,6 @@ ParseException:
 
 >>> drushmake.parseline('projects[my_module][subdir] = some_dir/one-more-dir')['projects']
 (['my_module', 'some_dir/one-more-dir'], {'name': [('my_module', 0)], 'subdir': [('some_dir/one-more-dir', 1)]})
+
+>>> drushmake.parseline('projects[my_module][overwrite] = TRUE')['projects']
+(['my_module', 'TRUE'], {'name': [('my_module', 0)], 'overwrite': [('TRUE', 1)]})
