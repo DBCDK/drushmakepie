@@ -86,3 +86,15 @@ ParseException:
 
 >>> drushmake.parseline('projects[my_module][overwrite] = TRUE')['projects']
 (['my_module', 'TRUE'], {'name': [('my_module', 0)], 'overwrite': [('TRUE', 1)]})
+
+>>> drushmake.parseline('projects[my_module][download][type] = git')['projects']
+(['my_module', 'git'], {'download': [((['git'], {}), 1)], 'name': [('my_module', 0)]})
+
+>>> drushmake.parseline('projects[my_module][download][type] = file')['projects']
+(['my_module', 'file'], {'download': [((['file'], {}), 1)], 'name': [('my_module', 0)]})
+
+>>> drushmake.parseline('projects[my_module][download][type] = svn')['projects']
+(['my_module', 'svn'], {'download': [((['svn'], {}), 1)], 'name': [('my_module', 0)]})
+
+>>> drushmake.parseline('projects[my_module][download][type] = bzr')['projects']
+(['my_module', 'bzr'], {'download': [((['bzr'], {}), 1)], 'name': [('my_module', 0)]})

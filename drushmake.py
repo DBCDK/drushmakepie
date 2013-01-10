@@ -16,6 +16,7 @@ MD5 = Keyword('md5').suppress()
 SUBDIR = Keyword('subdir').suppress()
 OVERWRITE = Keyword('overwrite').suppress()
 TRUTH = oneOf('TRUE FALSE')
+DOWNLOAD = Keyword('download').suppress()
 
 # Helper functions
 def brackets(x):
@@ -51,7 +52,11 @@ subdir = brackets(SUBDIR) + EQUAL + Word(printables)('subdir')
 
 overwrite = brackets(OVERWRITE) + EQUAL + TRUTH('overwrite')
 
-project_options = overwrite | patch | subdir | types | version
+download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')
+download_option = download_type
+download = brackets(DOWNLOAD) + download_option('download')
+
+project_options = download | overwrite | patch | subdir | types | version
 projects = (PROJECTS + brackets(name) + project_options)('projects')
 
 makefile_grammar = (comment | ((api | core | projects) + Optional(comment))) + stringEnd
