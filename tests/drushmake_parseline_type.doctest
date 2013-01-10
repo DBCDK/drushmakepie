@@ -1,0 +1,16 @@
+>>> import drushmake
+>>> drushmake.parseline('projects[my_theme][type] = theme')['projects']
+(['my_theme', 'theme'], {'type': [('theme', 1)], 'name': [('my_theme', 0)]})
+
+>>> drushmake.parseline('projects[my_module][type] = module')['projects']
+(['my_module', 'module'], {'type': [('module', 1)], 'name': [('my_module', 0)]})
+
+>>> drushmake.parseline('projects[my_profile][type] = profile')['projects']
+(['my_profile', 'profile'], {'type': [('profile', 1)], 'name': [('my_profile', 0)]})
+
+>>> drushmake.parseline('projects[my_core][type] = core')['projects']
+(['my_core', 'core'], {'type': [('core', 1)], 'name': [('my_core', 0)]})
+
+>>> drushmake.parseline('projects[my_gibberish][type] = gibberish')['projects'] # doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+ParseException:

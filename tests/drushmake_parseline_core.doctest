@@ -1,0 +1,11 @@
+>>> import drushmake
+>>> drushmake.parseline('core = 7.x')['core']
+'7.x'
+
+>>> drushmake.parseline('core = 7 .x')['core'] # doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+ParseException:
+
+>>> drushmake.parseline('core = 7. x')['core'] # doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+ParseException:
