@@ -10,6 +10,7 @@ CORE = Keyword('core').suppress()
 PROJECTS = Keyword('projects').suppress()
 VERSION = Keyword('version').suppress()
 TYPE = Keyword('type').suppress()
+PATCH = Keyword('patch').suppress()
 
 # Helper functions
 def brackets(x):
@@ -36,10 +37,12 @@ version = short_version | long_version
 
 types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
 
-projects = (PROJECTS + brackets(name) + (types | version))('projects')
 
+patch = brackets(PATCH) + EQUAL + Word(printables)('patch')
 
-makefile_grammar = comment | ((api | core | projects) + Optional(comment))
+projects = (PROJECTS + brackets(name) + (patch | types | version))('projects')
+
+makefile_grammar = (comment | ((api | core | projects) + Optional(comment))) + stringEnd
 
 def parseline(line):
   def collapsespaces(chars):

@@ -63,3 +63,10 @@ ParseException:
 >>> drushmake.parseline('projects[my_gibberish][type] = gibberish')['projects'] # doctest: +IGNORE_EXCEPTION_DETAIL
 Traceback (most recent call last):
 ParseException:
+
+>>> drushmake.parseline('projects[my_module][patch] = http://someurl.domain/my_patch.diff')['projects']
+(['my_module', 'http://someurl.domain/my_patch.diff'], {'name': [('my_module', 0)], 'patch': [('http://someurl.domain/my_patch.diff', 1)]})
+
+>>> drushmake.parseline('projects[my_module][patch] = http://someurl.domain/my_patch.diff no spaces')['projects'] # doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+ParseException:
