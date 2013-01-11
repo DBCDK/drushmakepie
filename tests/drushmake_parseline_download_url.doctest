@@ -1,0 +1,4 @@
+>>> import drushmake
+>>> drushmake.parseline('projects[my_module][download][url] = git://github.com/DBCDK/drushmakepie.git')['projects']
+(['my_module', 'git://github.com/DBCDK/drushmakepie.git'], {'name': [('my_module', 0)], 'download_url': [('git://github.com/DBCDK/drushmakepie.git', 1)]})
+
