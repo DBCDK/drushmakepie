@@ -44,7 +44,8 @@ version = short_version | long_version
 types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
 
 patch_name = Word(alphas, alphanums + '_-')('patch')
-patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name))) + EQUAL + Word(printables)('url')
+url = Word(printables)('url')
+patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name))) + EQUAL + url
 patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + Word(hexnums)('md5')
 patch = brackets(PATCH) + (patch_url | patch_md5)
 
@@ -52,9 +53,10 @@ subdir = brackets(SUBDIR) + EQUAL + Word(printables)('subdir')
 
 overwrite = brackets(OVERWRITE) + EQUAL + TRUTH('overwrite')
 
-download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')
-download_option = download_type
-download = brackets(DOWNLOAD) + download_option('download')
+download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')('download_type')
+download_url = brackets(URL) + EQUAL + url('download_url')
+download_option = download_type | download_url
+download = brackets(DOWNLOAD) + download_option
 
 project_options = download | overwrite | patch | subdir | types | version
 projects = (PROJECTS + brackets(name) + project_options)('projects')
