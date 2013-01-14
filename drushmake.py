@@ -53,11 +53,11 @@ subdir = brackets(SUBDIR) + EQUAL + Word(printables)('subdir')
 
 overwrite = brackets(OVERWRITE) + EQUAL + TRUTH('overwrite')
 
-download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')('download_type')
-download_url = brackets(URL) + EQUAL + url('download_url')
+download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')('type')
+download_url = brackets(URL) + EQUAL + url
 download_hash = brackets(oneOf('md5 sha1 sha256 sha512')('algorithm')) + EQUAL + Word(hexnums)('hash')
 download_option = download_type | download_url | download_hash
-download = brackets(DOWNLOAD) + download_option
+download = (brackets(DOWNLOAD) + download_option)('download')
 
 project_options = download | overwrite | patch | subdir | types | version
 projects = (PROJECTS + brackets(name) + project_options)('projects')
