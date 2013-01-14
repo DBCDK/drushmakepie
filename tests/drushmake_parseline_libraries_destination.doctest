@@ -1,0 +1,3 @@
+>>> import drushmake
+>>> drushmake.parseline('libraries[my_library][destination] = some/dir')['libraries']
+(['my_library', 'some/dir'], {'destination': [('some/dir', 1)], 'name': [('my_library', 0)]})

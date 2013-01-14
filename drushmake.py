@@ -20,6 +20,8 @@ DOWNLOAD = Keyword('download').suppress()
 BRANCH = Keyword('branch').suppress()
 TAG = Keyword('tag').suppress()
 REVISION = Keyword('revision').suppress()
+LIBRARIES = Keyword('libraries').suppress()
+DESTINATION = Keyword('destination').suppress()
 
 # Helper functions
 def brackets(x):
@@ -68,7 +70,12 @@ download = (brackets(DOWNLOAD) + download_option)('download')
 project_options = download | overwrite | patch | subdir | types | version
 projects = (PROJECTS + brackets(name) + project_options)('projects')
 
-makefile_grammar = (comment | ((api | core | projects) + Optional(comment))) + stringEnd
+libraries_destination = brackets(DESTINATION) + EQUAL + Word(printables)('destination')
+libraries_download = (brackets(DOWNLOAD) + (download_type | download_url | download_hash))('download')
+libraries_option = libraries_download | libraries_destination
+libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
+
+makefile_grammar = (comment | ((api | core | projects | libraries) + Optional(comment))) + stringEnd
 
 def parseline(line):
   def collapsespaces(chars):

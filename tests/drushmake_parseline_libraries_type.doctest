@@ -1,0 +1,12 @@
+>>> import drushmake
+>>> drushmake.parseline('libraries[my_library][download][type] = git')['libraries']
+(['my_library', 'git'], {'download': [((['git'], {'type': [('git', 0)]}), 1)], 'type': [('git', 1)], 'name': [('my_library', 0)]})
+
+>>> drushmake.parseline('libraries[my_library][download][type] = file')['libraries']
+(['my_library', 'file'], {'download': [((['file'], {'type': [('file', 0)]}), 1)], 'type': [('file', 1)], 'name': [('my_library', 0)]})
+
+>>> drushmake.parseline('libraries[my_library][download][type] = svn')['libraries']
+(['my_library', 'svn'], {'download': [((['svn'], {'type': [('svn', 0)]}), 1)], 'type': [('svn', 1)], 'name': [('my_library', 0)]})
+
+>>> drushmake.parseline('libraries[my_library][download][type] = bzr')['libraries']
+(['my_library', 'bzr'], {'download': [((['bzr'], {'type': [('bzr', 0)]}), 1)], 'type': [('bzr', 1)], 'name': [('my_library', 0)]})
