@@ -17,6 +17,9 @@ SUBDIR = Keyword('subdir').suppress()
 OVERWRITE = Keyword('overwrite').suppress()
 TRUTH = oneOf('TRUE FALSE')
 DOWNLOAD = Keyword('download').suppress()
+BRANCH = Keyword('branch').suppress()
+TAG = Keyword('tag').suppress()
+REVISION = Keyword('revision').suppress()
 
 # Helper functions
 def brackets(x):
@@ -56,7 +59,10 @@ overwrite = brackets(OVERWRITE) + EQUAL + TRUTH('overwrite')
 download_type = brackets(TYPE) + EQUAL + oneOf('git file svn bzr')('type')
 download_url = brackets(URL) + EQUAL + url
 download_hash = brackets(oneOf('md5 sha1 sha256 sha512')('algorithm')) + EQUAL + Word(hexnums)('hash')
-download_option = download_type | download_url | download_hash
+download_branch = brackets(BRANCH) + EQUAL + Word(printables)('branch')
+download_tag = brackets(TAG) + EQUAL + Word(printables)('tag')
+download_revision = brackets(REVISION) + EQUAL + Word(hexnums)('revision')
+download_option = download_type | download_url | download_hash | download_branch | download_tag | download_revision
 download = (brackets(DOWNLOAD) + download_option)('download')
 
 project_options = download | overwrite | patch | subdir | types | version
