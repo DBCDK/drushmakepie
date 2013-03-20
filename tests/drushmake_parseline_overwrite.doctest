@@ -1,3 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[my_module][overwrite] = TRUE')['projects']
-(['my_module', 'TRUE'], {'name': [('my_module', 0)], 'overwrite': [('TRUE', 1)]})
