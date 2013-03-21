@@ -1,6 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[drupal] = 7.17')['projects']
-(['drupal', '7.17'], {'version': [('7.17', 1)], 'name': [('drupal', 0)]})
-
->>> drushmake.parseline('projects[drupal][version] = 7.17')['projects']
-(['drupal', '7.17'], {'version': [('7.17', 1)], 'name': [('drupal', 0)]})
