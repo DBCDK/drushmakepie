@@ -1,3 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[my_module][subdir] = some_dir/one-more-dir')['projects']
-(['my_module', 'some_dir/one-more-dir'], {'name': [('my_module', 0)], 'subdir': [('some_dir/one-more-dir', 1)]})
