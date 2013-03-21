@@ -8,4 +8,4 @@ def testParselineCore():
     with pytest.raises(drushmake.ParseException):
         drushmake.parseline('core = 7 .x')['core']
     with pytest.raises(drushmake.ParseException):
-        drushmake.parseline('core = 7. x')['core'] 
+        drushmake.parseline('core = 7. x')['core']
