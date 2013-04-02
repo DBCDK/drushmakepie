@@ -95,3 +95,21 @@ class TestParselineDownloadUrl:
         line = 'projects[my_module][download][url] = git://github.com/DBCDK/drushmakepie.git space'
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
+
+class TestParselineDownloadBranch:
+    def testSimpleBranchName(self):
+        line = 'projects[my_module][download][branch] = develop'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['branch'] == 'develop'
+
+    def testBranchNameWithSlash(self):
+        line = 'projects[my_module][download][branch] = feature/branch'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['branch'] == 'feature/branch'
+
+    def testBranchNameWithSpace(self):
+        line = 'projects[my_module][download][branch] = space in path'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)

@@ -1,6 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[my_module][download][branch] = develop')['projects']
-(['my_module', 'develop'], {'download': [((['develop'], {'branch': [('develop', 0)]}), 1)], 'name': [('my_module', 0)], 'branch': [('develop', 1)]})
-
->>> drushmake.parseline('projects[my_module][download][branch] = feature/branch')['projects']
-(['my_module', 'feature/branch'], {'download': [((['feature/branch'], {'branch': [('feature/branch', 0)]}), 1)], 'name': [('my_module', 0)], 'branch': [('feature/branch', 1)]})
