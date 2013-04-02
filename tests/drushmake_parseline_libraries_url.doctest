@@ -1,4 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('libraries[my_library][download][url] = http://oss.dbc.dk/public/fake_library.tar.gz')['libraries']
-(['my_library', 'http://oss.dbc.dk/public/fake_library.tar.gz'], {'url': [('http://oss.dbc.dk/public/fake_library.tar.gz', 1)], 'download': [((['http://oss.dbc.dk/public/fake_library.tar.gz'], {'url': [('http://oss.dbc.dk/public/fake_library.tar.gz', 0)]}), 1)], 'name': [('my_library', 0)]})
-
