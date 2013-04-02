@@ -84,3 +84,14 @@ class TestParselineDownloadType:
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
 
+class TestParselineDownloadUrl:
+    def testUrl(self):
+        line = 'projects[my_module][download][url] = git://github.com/DBCDK/drushmakepie.git'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['url'] == 'git://github.com/DBCDK/drushmakepie.git'
+
+    def testNotValidUrl(self):
+        line = 'projects[my_module][download][url] = git://github.com/DBCDK/drushmakepie.git space'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
