@@ -1,6 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[my_module][download][tag] = named_tag')['projects']
-(['my_module', 'named_tag'], {'download': [((['named_tag'], {'tag': [('named_tag', 0)]}), 1)], 'tag': [('named_tag', 1)], 'name': [('my_module', 0)]})
-
->>> drushmake.parseline('projects[my_module][download][tag] = 7.x-0.2+dbc.1')['projects']
-(['my_module', '7.x-0.2+dbc.1'], {'download': [((['7.x-0.2+dbc.1'], {'tag': [('7.x-0.2+dbc.1', 0)]}), 1)], 'tag': [('7.x-0.2+dbc.1', 1)], 'name': [('my_module', 0)]})

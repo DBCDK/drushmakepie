@@ -113,3 +113,21 @@ class TestParselineDownloadBranch:
         line = 'projects[my_module][download][branch] = space in path'
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
+
+class TestParselineDownloadTag:
+    def testSimpleTag(self):
+        line = 'projects[my_module][download][tag] = named_tag'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['tag'] == 'named_tag'
+
+    def testVersionTag(self):
+        line = 'projects[my_module][download][tag] = 7.x-0.2+dbc.1'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['tag'] == '7.x-0.2+dbc.1'
+
+    def testTabWithSpace(self):
+        line = 'projects[my_module][download][tag] = space in tag'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
