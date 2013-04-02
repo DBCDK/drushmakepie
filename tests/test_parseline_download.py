@@ -3,7 +3,7 @@ import pytest
 import drushmake
 
 
-class TestParselineDownload:
+class TestParselineDownloadHash:
     def testBranch(self):
         line = 'projects[my_module][download][branch] = develop'
         result = drushmake.parseline(line)
@@ -53,3 +53,34 @@ class TestParselineDownload:
         line = 'projects[my_module][download][sha215] = 0123456789abcdef'
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
+
+class TestParselineDownloadType:
+    def testGit(self):
+        line = 'projects[my_module][download][type] = git'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['type'] == 'git'
+
+    def testFile(self):
+        line = 'projects[my_module][download][type] = file'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['type'] == 'file'
+
+    def testSvn(self):
+        line = 'projects[my_module][download][type] = svn'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['type'] == 'svn'
+
+    def testBzr(self):
+        line = 'projects[my_module][download][type] = bzr'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['type'] == 'bzr'
+
+    def testWrongType(self):
+        line = 'projects[my_module][download][type] = xyz'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
+
