@@ -131,3 +131,15 @@ class TestParselineDownloadTag:
         line = 'projects[my_module][download][tag] = space in tag'
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
+
+class TestParselineDownloadRevision:
+    def testRevisionNumber(self):
+        line = 'projects[my_module][download][revision] = 0123456789abcdef'
+        result = drushmake.parseline(line)
+        assert result['projects']['name'] == 'my_module'
+        assert result['projects']['download']['revision'] == '0123456789abcdef'
+
+    def testIllegalCharacter(self):
+        line = 'projects[my_module][download][revision] = 0123456789abcdefg'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)

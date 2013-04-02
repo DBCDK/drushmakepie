@@ -1,3 +1,0 @@
->>> import drushmake
->>> drushmake.parseline('projects[my_module][download][revision] = 0123456789abcdef')['projects']
-(['my_module', '0123456789abcdef'], {'download': [((['0123456789abcdef'], {'revision': [('0123456789abcdef', 0)]}), 1)], 'name': [('my_module', 0)], 'revision': [('0123456789abcdef', 1)]})
