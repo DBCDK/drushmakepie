@@ -101,3 +101,51 @@ class TestParselineDownloadHash:
         line = 'libraries[my_library][download][sha215] = 0123456789abcdef'
         with pytest.raises(drushmake.ParseException):
             drushmake.parseline(line)
+
+class TestParselineDownloadBranch:
+    def testSimpleBranchName(self):
+        line = 'libraries[my_library][download][branch] = develop'
+        result = drushmake.parseline(line)
+        assert result['libraries']['name'] == 'my_library'
+        assert result['libraries']['download']['branch'] == 'develop'
+
+    def testBranchNameWithSlash(self):
+        line = 'libraries[my_library][download][branch] = feature/branch'
+        result = drushmake.parseline(line)
+        assert result['libraries']['name'] == 'my_library'
+        assert result['libraries']['download']['branch'] == 'feature/branch'
+
+    def testBranchNameWithSpace(self):
+        line = 'libraries[my_library][download][branch] = space in path'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
+
+class TestParselineDownloadTag:
+    def testSimpleTag(self):
+        line = 'libraries[my_library][download][tag] = named_tag'
+        result = drushmake.parseline(line)
+        assert result['libraries']['name'] == 'my_library'
+        assert result['libraries']['download']['tag'] == 'named_tag'
+
+    def testVersionTag(self):
+        line = 'libraries[my_library][download][tag] = 7.x-0.2+dbc.1'
+        result = drushmake.parseline(line)
+        assert result['libraries']['name'] == 'my_library'
+        assert result['libraries']['download']['tag'] == '7.x-0.2+dbc.1'
+
+    def testTabWithSpace(self):
+        line = 'libraries[my_library][download][tag] = space in tag'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
+
+class TestParselineDownloadRevision:
+    def testRevisionNumber(self):
+        line = 'libraries[my_library][download][revision] = 0123456789abcdef'
+        result = drushmake.parseline(line)
+        assert result['libraries']['name'] == 'my_library'
+        assert result['libraries']['download']['revision'] == '0123456789abcdef'
+
+    def testIllegalCharacter(self):
+        line = 'libraries[my_library][download][revision] = 0123456789abcdefg'
+        with pytest.raises(drushmake.ParseException):
+            drushmake.parseline(line)
