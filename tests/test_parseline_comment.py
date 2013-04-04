@@ -4,7 +4,8 @@ import pytest
 
 
 def testEmpty():
-    assert drushmake.parseline('') == ()
+    assert drushmake.parseline('') is None
+    assert drushmake.parseline(' ') is None
 
 def testGibberish():
     with pytest.raises(drushmake.ParseException):

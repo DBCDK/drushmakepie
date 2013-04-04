@@ -1,5 +1,8 @@
 import drushmake
 
+def testParselineEmpty():
+    assert drushmake.parseline('') is None
+    assert drushmake.parseline(' ') is None
 
 class TestDrushmakeParsefile:
     def prepareInput(self, file):
@@ -11,8 +14,19 @@ class TestDrushmakeParsefile:
         """
         z = []
         for line in file:
-            z += [drushmake.parseline(line)]
+            e = drushmake.parseline(line)
+            if e is not None:
+                z += [e]
         return z
+
+    def testEmpty(self):
+        expected = {'drupal': [], 'libraries': [], 'modules': [], 'themes': []}
+        empty = self.prepareInput([])
+        blank = self.prepareInput([''])
+        space = self.prepareInput([' '])
+        assert drushmake.parsefile(empty) == expected
+        assert drushmake.parsefile(blank) == expected
+        assert drushmake.parsefile(space) == expected
 
     def testComments(self):
         expected = {'drupal': [], 'libraries': [], 'modules': [], 'themes': []}

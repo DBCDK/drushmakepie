@@ -8,10 +8,10 @@ def parseline(line):
     def collapsespaces(chars):
         return ' '.join(chars.split())
 
-    if line == '':
-        return ()
+    if collapsespaces(line) == '':
+        return
     else:
-        tokens = grammar.parseString(collapsespaces(line))
+        tokens = grammar.parseString(line)
         return tokens
 
 def parseProject(project):
