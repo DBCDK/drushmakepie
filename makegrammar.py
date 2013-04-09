@@ -3,7 +3,7 @@ from tokens import *
 
 def brackets(x):
   """ Helper function to enclose something in brackets. """
-  return LBRCKT + x + RBRCKT
+  return LBRCKT.leaveWhitespace() + x.leaveWhitespace() + RBRCKT.leaveWhitespace()
 
 ## Comment ##
 optional_text = Combine(Optional(Word(printables + ' ')))
@@ -68,4 +68,5 @@ libraries_option = download | destination
 libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##
-grammar = (comment | ((api | core | projects | libraries) + Optional(comment))) + stringEnd
+statement = (comment | ((api | core | projects | libraries) + Optional(comment)))
+grammar =  statement + stringEnd
