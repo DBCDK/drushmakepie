@@ -69,4 +69,4 @@ libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##
 statement = (comment | ((api | core | projects | libraries) + Optional(comment)))
-grammar =  statement + stringEnd
+grammar =  Optional(statement) + stringEnd

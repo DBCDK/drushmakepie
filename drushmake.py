@@ -5,14 +5,7 @@ class DrushMakeException(Exception):
     pass
 
 def parseline(line):
-    def collapsespaces(chars):
-        return ' '.join(chars.split())
-
-    if collapsespaces(line) == '':
-        return
-    else:
-        tokens = grammar.parseString(line)
-        return tokens
+    return grammar.parseString(line)
 
 def parseProject(project):
     name = project['name']

@@ -3,14 +3,6 @@ import drushmake
 import pytest
 
 
-def testEmpty():
-    assert drushmake.parseline('') is None
-    assert drushmake.parseline(' ') is None
-
-def testGibberish():
-    with pytest.raises(drushmake.ParseException):
-        assert drushmake.parseline('gibberish')
-
 def testComment():
     assert drushmake.parseline('#')['comment'] == ''
     assert drushmake.parseline(' #')['comment'] == ''

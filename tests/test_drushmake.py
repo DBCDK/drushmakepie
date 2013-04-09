@@ -1,8 +1,13 @@
 import drushmake
 
+
 def testParselineEmpty():
-    assert drushmake.parseline('') is None
-    assert drushmake.parseline(' ') is None
+    assert len(drushmake.parseline('')) == 0 # is None
+    assert len(drushmake.parseline(' ')) == 0 # is None
+
+def testGibberish():
+    with pytest.raises(drushmake.ParseException):
+        assert drushmake.parseline('gibberish')
 
 class TestDrushmakeParsefile:
     def prepareInput(self, file):
