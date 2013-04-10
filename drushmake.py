@@ -7,6 +7,9 @@ class DrushMakeException(Exception):
 def parseline(line):
     return grammar.parseString(line)
 
+def parse(filename):
+    return grammar.parseFile(filename)
+
 def parseProject(project):
     name = project['name']
     del project['name']

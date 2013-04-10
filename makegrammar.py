@@ -10,7 +10,7 @@ optional_text = Combine(Optional(Word(printables + ' ')))
 comment = HASH + optional_text('comment')
 
 ## Api ##
-api_no = Word(nums) | Word(nums)
+api_no = Word(nums)
 api = API + EQUAL + api_no('api')
 
 ## Core ##
@@ -69,4 +69,4 @@ libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##
 statement = (comment | ((api | core | projects | libraries) + Optional(comment)))
-grammar =  Optional(statement) + stringEnd
+grammar = ZeroOrMore((statement)) + stringEnd

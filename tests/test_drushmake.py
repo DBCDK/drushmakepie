@@ -1,4 +1,6 @@
+from __future__ import with_statement
 import drushmake
+import pytest
 
 
 def testParselineEmpty():
@@ -9,44 +11,20 @@ def testGibberish():
     with pytest.raises(drushmake.ParseException):
         assert drushmake.parseline('gibberish')
 
-class TestDrushmakeParsefile:
-    def prepareInput(self, file):
-        """
-        Helper function to parse the single lines.
-
-        Takes an array of text string and sends each through
-        drushmake.parseline()
-        """
-        z = []
-        for line in file:
-            e = drushmake.parseline(line)
-            if e is not None:
-                z += [e]
-        return z
-
+class TestDrushmakeParse:
     def testEmpty(self):
-        expected = {'drupal': [], 'libraries': [], 'modules': [], 'themes': []}
-        empty = self.prepareInput([])
-        blank = self.prepareInput([''])
-        space = self.prepareInput([' '])
-        assert drushmake.parsefile(empty) == expected
-        assert drushmake.parsefile(blank) == expected
-        assert drushmake.parsefile(space) == expected
+        result = drushmake.parse('tests/makefiles/empty.make')
+        assert len(result) == 0
 
-    def testComments(self):
-        expected = {'drupal': [], 'libraries': [], 'modules': [], 'themes': []}
-        simple_comment = self.prepareInput(['# test'])
-        no_comment = self.prepareInput(['api = 2', 'core = 7.x'])
-        api_core_comment = self.prepareInput(['api = 2', 'core = 7.x', '#test'])
-        assert drushmake.parsefile(simple_comment) == expected
-        assert drushmake.parsefile(no_comment) == expected
-        assert drushmake.parsefile(api_core_comment) == expected
+    def testApiOnly(self):
+        result = drushmake.parse('tests/makefiles/apionly.make')
+        assert result.api == '2'
 
-    def testDrupal(self):
-        expected = {'drupal': [{'version': '7.17'}],
-                    'libraries': [],
-                    'modules': [],
-                    'themes': []}
-        drupal_version_only = self.prepareInput(['api = 2', 'core = 7.x',
-            'projects[drupal] = 7.17'])
-        assert drushmake.parsefile(drupal_version_only) == expected
+    def testCoreOnly(self):
+        result = drushmake.parse('tests/makefiles/coreonly.make')
+        assert result.core == '7.x'
+
+    def testApiAndCore(self):
+        result = drushmake.parse('tests/makefiles/api_core.make')
+        assert result.core == '7.x'
+        assert result.api == '2'
