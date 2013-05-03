@@ -3,13 +3,13 @@ import drushmake
 import pytest
 
 
-def testParselineEmpty():
-    assert len(drushmake.parseline('')) == 0 # is None
-    assert len(drushmake.parseline(' ')) == 0 # is None
-
-def testGibberish():
+def testNonStatement():
     with pytest.raises(drushmake.ParseException):
-        assert drushmake.parseline('gibberish')
+        drushmake.parseline('gibberish')
+    with pytest.raises(drushmake.ParseException):
+        drushmake.parseline('')
+    with pytest.raises(drushmake.ParseException):
+        drushmake.parseline(' ')
 
 class TestDrushmakeParse:
     def testEmpty(self):
@@ -23,8 +23,3 @@ class TestDrushmakeParse:
     def testCoreOnly(self):
         result = drushmake.parse('tests/makefiles/coreonly.make')
         assert result.core == '7.x'
-
-    def testApiAndCore(self):
-        result = drushmake.parse('tests/makefiles/api_core.make')
-        assert result.core == '7.x'
-        assert result.api == '2'
