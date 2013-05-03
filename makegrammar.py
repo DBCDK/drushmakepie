@@ -68,5 +68,5 @@ libraries_option = download | destination
 libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##
-statement = (comment | ((api | core | projects | libraries) + Optional(comment)))
+statement = (comment | ((api | core | projects | libraries) + Optional(comment))) + lineEnd
 grammar = ZeroOrMore((statement)) + stringEnd

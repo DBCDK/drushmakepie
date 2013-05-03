@@ -5,7 +5,7 @@ class DrushMakeException(Exception):
     pass
 
 def parseline(line):
-    return grammar.parseString(line)
+    return statement.parseString(line)
 
 def parse(filename):
     return grammar.parseFile(filename)
