@@ -1,15 +1,18 @@
 from __future__ import with_statement # Keyword 'with' not part of python 2.5
-import drushmake
+from makegrammar import comment, ParseException
 import pytest
 
 
 def testComment():
-    assert drushmake.parseline('#')['comment'] == ''
-    assert drushmake.parseline(' #')['comment'] == ''
-    assert drushmake.parseline(' # and some text')['comment'] == 'and some text'
+    assert comment.parseString('#')['comment'] == ''
+    assert comment.parseString(' #')['comment'] == ''
+    assert comment.parseString(' # and some text')['comment'] == 'and some text'
 
 def testAlternativeComment():
-    assert drushmake.parseline(';')['comment'] == ''
-    assert drushmake.parseline(' ;')['comment'] == ''
-    assert drushmake.parseline(' ; and some text')['comment'] == 'and some text'
+    assert comment.parseString(';')['comment'] == ''
+    assert comment.parseString(' ;')['comment'] == ''
+    assert comment.parseString(' ; and some text')['comment'] == 'and some text'
 
+def testNotAComment():
+    with pytest.raises(ParseException):
+        comment.parseString('no comment')
