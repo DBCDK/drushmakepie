@@ -1,18 +1,16 @@
 from __future__ import with_statement
+from makegrammar import overwrite, ParseException
 import pytest
-import drushmake
 
 
-def testParselineOverwriteTrue():
-    result = drushmake.parseline('projects[my_module][overwrite] = TRUE')
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['overwrite'] == 'TRUE'
+def testOverwriteTrue():
+    result = overwrite.parseString('[overwrite] = TRUE')
+    assert result['overwrite'] == 'TRUE'
 
-def testParselineOverwriteFalse():
-    result = drushmake.parseline('projects[my_module][overwrite] = FALSE')
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['overwrite'] == 'FALSE'
+def testOverwriteFalse():
+    result = overwrite.parseString('[overwrite] = FALSE')
+    assert result['overwrite'] == 'FALSE'
 
-def testParselineOverwriteFail():
-    with pytest.raises(drushmake.ParseException):
-        drushmake.parseline('projects[my_module][overwrite] = neither')
+def testOverwriteFail():
+    with pytest.raises(ParseException):
+        overwrite.parseString('[overwrite] = neither')
