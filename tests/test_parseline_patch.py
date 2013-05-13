@@ -1,41 +1,45 @@
 from __future__ import with_statement
+from makegrammar import patch, ParseException
 import pytest
-import drushmake
 
 
-def testParselinePatchSimple():
+def testPatchSimple():
     url = 'http://someurl.domain/my_patch.diff'
-    line = 'projects[my_module][patch][] = ' + url
-    result = drushmake.parseline(line)
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['url'] == url
+    line = '[patch][] = ' + url
+    result = patch.parseString(line)
+    assert result['url'] == url
 
-def testParselinePatchMissingBrackets():
+def testPatchMissingBrackets():
     url = 'http://someurl.domain/my_patch.diff'
-    line = 'projects[my_module][patch] = ' + url
-    with pytest.raises(drushmake.ParseException):
-        drushmake.parseline(line)
+    line = '[patch] = ' + url
+    with pytest.raises(ParseException):
+        patch.parseString(line)
 
-def testParselinePatchUrlSpaces():
+def testPatchUrlSpaces():
     url = 'http://someurl.domain/my_patch.diff no spaces'
-    line = 'projects[my_module][patch] = ' + url
-    with pytest.raises(drushmake.ParseException):
-        drushmake.parseline(line)
+    line = '[patch] = ' + url
+    with pytest.raises(ParseException):
+        patch.parseString(line)
 
-def testParselinePatchNamed():
+def testPatchNamed():
     url = 'http://someurl.domain/my_patch.diff'
-    line = 'projects[my_module][patch][pname] = ' + url
-    result = drushmake.parseline(line)
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['url'] == url
-    assert result['projects']['patch'] == 'pname'
+    line = '[patch][pname] = ' + url
+    result = patch.parseString(line)
+    assert result['url'] == url
+    assert result['patch'] == 'pname'
 
-def testParselinePatchChecksum():
+def testPatchUrl():
+    url = 'http://someurl.domain/my_patch.diff'
+    line = '[patch][pname][url] = ' + url
+    result = patch.parseString(line)
+    assert result['patch'] == 'pname'
+    assert result['url'] == url
+
+def testPatchChecksum():
     md5 = '0123456789abcdef'
     url = 'http://someurl.domain/my_patch.diff'
-    line = 'projects[my_module][patch][pname][md5] = ' + md5
-    result = drushmake.parseline(line)
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['patch'] == 'pname'
-    assert result['projects']['md5'] == md5
+    line = '[patch][pname][md5] = ' + md5
+    result = patch.parseString(line)
+    assert result['patch'] == 'pname'
+    assert result['md5'] == md5
 
