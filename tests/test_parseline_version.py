@@ -1,12 +1,24 @@
-import drushmake
+from __future__ import with_statement
+from makegrammar import version, version_number, ParseException
+import pytest
 
 
-def testParselineVesionShort():
-    result = drushmake.parseline('projects[drupal] = 7.17')
-    assert result['projects']['name'] == 'drupal'
-    assert result['projects']['version'] == '7.17'
+def testVersionNumber():
+    result = version_number.parseString('7.17')
+    assert result['version_number'] == '7.17'
 
-def testParselineVersionLong():
-    result = drushmake.parseline('projects[drupal][version] = 7.17')
-    assert result['projects']['name'] == 'drupal'
-    assert result['projects']['version'] == '7.17'
+def testMissingMajorVersion():
+    with pytest.raises(ParseException):
+        version_number.parseString('.17')
+
+def testMissingMinorVersion():
+    with pytest.raises(ParseException):
+        version_number.parseString('7.')
+
+def testSpacedVersion():
+    with pytest.raises(ParseException):
+        version_number.parseString('7 .17')
+
+def testVersionLong():
+    result = version.parseString('[version] = 7.17')
+    assert result['version_number'] == '7.17'

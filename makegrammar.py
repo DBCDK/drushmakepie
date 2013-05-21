@@ -50,14 +50,14 @@ download = (brackets(DOWNLOAD) + download_option)('download')
 
 ## Projects ##
 # Version
-short_version = EQUAL + Combine(Word(nums) + Literal('.') + Word(nums))('version')
-long_version = brackets(VERSION) + short_version
-version = short_version | long_version
+version_number = Combine(Word(nums).leaveWhitespace() + Literal('.').leaveWhitespace() + Word(nums))('version_number')
+version = brackets(VERSION) + EQUAL + version_number
 
 # Type
 types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
 
 # Project definition
+#short_version = EQUAL + version_number
 project_options = download | overwrite | patch | subdir | types | version
 projects = (PROJECTS + brackets(name) + project_options)('projects')
 
