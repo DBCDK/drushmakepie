@@ -3,7 +3,7 @@ from tokens import *
 
 def brackets(x):
   """ Helper function to enclose something in brackets. """
-  return LBRCKT.leaveWhitespace() + x.leaveWhitespace() + RBRCKT.leaveWhitespace()
+  return (LBRCKT + x + RBRCKT).leaveWhitespace()
 
 ## Comment ##
 optional_text = Combine(Optional(Word(printables + ' ')))
@@ -50,16 +50,17 @@ download = (brackets(DOWNLOAD) + download_option)('download')
 
 ## Projects ##
 # Version
-version_number = Combine(Word(nums).leaveWhitespace() + Literal('.').leaveWhitespace() + Word(nums))('version_number')
+version_number = Combine(Word(nums)+ Literal('.') + Word(nums))('version_number')
 version = brackets(VERSION) + EQUAL + version_number
 
 # Type
 types = brackets(TYPE) + EQUAL + oneOf('theme module core profile')('type')
 
 # Project definition
-#short_version = EQUAL + version_number
-project_options = download | overwrite | patch | subdir | types | version
-projects = (PROJECTS + brackets(name) + project_options)('projects')
+short_version = (EQUAL + version_number)('short_version')
+project_options = download | overwrite | patch | subdir | types | version | short_version
+name_only = (brackets(empty) + EQUAL + name)('name_only')
+projects = (PROJECTS + ((brackets(name) + project_options) | name_only))('projects')
 
 ## Libraries ##
 # destination
