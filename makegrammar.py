@@ -22,7 +22,9 @@ core = CORE + EQUAL + major_x('core')
 name = Word(alphas, alphanums + '_')('name')
 
 # Url
-url = Word(printables)('url')
+percent_encoded_chars = '(%[0-9a-fA-F]{2})'
+url_chars = '[' + alphanums + ";/?:@=&$\-_.+!*'()," + ']' # escaped dash with \
+url = Regex('(' + url_chars + '|' + percent_encoded_chars + ')+')('url')
 
 # Patch
 patch_name = Word(alphas, alphanums + '_-')('patch')
