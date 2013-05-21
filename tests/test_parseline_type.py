@@ -1,28 +1,24 @@
 from __future__ import with_statement
+from makegrammar import types, ParseException
 import pytest
-import drushmake
 
 
-def testParselineTypeTheme():
-    result = drushmake.parseline('projects[my_theme][type] = theme')
-    assert result['projects']['name'] == 'my_theme'
-    assert result['projects']['type'] == 'theme'
+def testTypeTheme():
+    result = types.parseString('[type] = theme')
+    assert result['type'] == 'theme'
 
-def testParselineTypeModule():
-    result = drushmake.parseline('projects[my_module][type] = module')
-    assert result['projects']['name'] == 'my_module'
-    assert result['projects']['type'] == 'module'
+def testTypeModule():
+    result = types.parseString('[type] = module')
+    assert result['type'] == 'module'
 
-def testParselineTypeProfile():
-    result = drushmake.parseline('projects[my_profile][type] = profile')
-    assert result['projects']['name'] == 'my_profile'
-    assert result['projects']['type'] == 'profile'
+def testTypeProfile():
+    result = types.parseString('[type] = profile')
+    assert result['type'] == 'profile'
 
-def testParselineTypeCore():
-    result = drushmake.parseline('projects[my_core][type] = core')
-    assert result['projects']['name'] == 'my_core'
-    assert result['projects']['type'] == 'core'
+def testTypeCore():
+    result = types.parseString('[type] = core')
+    assert result['type'] == 'core'
 
-def testParselineGibberish():
-    with pytest.raises(drushmake.ParseException):
-        drushmake.parseline('projects[my_gibberish][type] = gibberish')
+def testGibberish():
+    with pytest.raises(ParseException):
+        types.parseString('[type] = gibberish')
