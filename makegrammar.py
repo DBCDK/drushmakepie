@@ -77,7 +77,7 @@ projects = (PROJECTS + ((brackets(name) + project_options) | name_only))('projec
 destination = brackets(DESTINATION) + EQUAL + optionallyQuoted(Word(printables))('destination')
 
 # Library definition
-libraries_option = download | destination
+libraries_option = download | destination | patch
 libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##
