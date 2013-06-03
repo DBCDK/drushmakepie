@@ -22,3 +22,7 @@ def testSpacedVersion():
 def testVersionLong():
     result = version.parseString('[version] = 7.17')
     assert result['version_number'] == '7.17'
+
+def testPreVersions():
+    result = version_number.parseString('7.17-alpha1')
+    assert result['version_number'] == '7.17-alpha1'

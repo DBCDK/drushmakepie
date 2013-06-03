@@ -29,7 +29,7 @@ core = CORE + EQUAL + major_x('core')
 
 ## General definitions ##
 # Name
-name = optionallyQuoted(Word(alphas, alphanums + '_'))('name')
+name = optionallyQuoted(Word(alphas, alphanums + '_-'))('name')
 
 # Url
 percent_encoded_chars = '(%[0-9a-fA-F]{2})'
@@ -37,7 +37,7 @@ url_chars = '[' + alphanums + ";/?:@=&$\-_.+!*'()," + ']' # escaped dash with \
 url = optionallyQuoted(Regex('(' + url_chars + '|' + percent_encoded_chars + ')+'))('url')
 
 # Patch
-patch_name = Word(alphas, alphanums + '_-')('patch')
+patch_name = name('patch')
 patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name))) + EQUAL + url
 patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + optionallyQuoted(Word(hexnums))('md5')
 patch = brackets(PATCH) + (patch_url | patch_md5)
@@ -60,7 +60,7 @@ download = (brackets(DOWNLOAD) + download_option)('download')
 
 ## Projects ##
 # Version
-version_number = optionallyQuoted(Combine(Word(nums) + Literal('.') + Word(nums)))('version_number')
+version_number = optionallyQuoted(Combine(Word(nums) + Literal('.') + Word(nums) + Optional(Word('-', alphanums, 2))))('version_number')
 version = brackets(VERSION) + EQUAL + version_number
 
 # Type
