@@ -37,10 +37,11 @@ url_chars = '[' + alphanums + ";/?:@=&$\-_.+!*'()," + ']' # escaped dash with \
 url = optionallyQuoted(Regex('(' + url_chars + '|' + percent_encoded_chars + ')+'))('url')
 
 # Patch
-patch_name = name('patch')
+patch_name = name('patch_name')
 patch_url = (brackets(patch_name) + brackets(URL) | brackets(Optional(patch_name))) + EQUAL + url
 patch_md5 = brackets(patch_name) + brackets(MD5) + EQUAL + optionallyQuoted(Word(hexnums))('md5')
-patch = brackets(PATCH) + (patch_url | patch_md5)
+patch_option = patch_url | patch_md5
+patch = (brackets(PATCH) + patch_option)('patch')
 
 # Subdir
 subdir = brackets(SUBDIR) + EQUAL + optionallyQuoted(Word(printables))('subdir')
