@@ -20,3 +20,9 @@ def testPatch():
     result = libraries.parseString(line)
     assert result['libraries']['name'] == 'my_library'
     assert result['libraries']['patch']['url'] == 'http://oss.dbc.dk/public/fake_library.patch'
+
+def testDiretoryName():
+    line = 'libraries[my_library][directory_name] = directory'
+    result = libraries.parseString(line)
+    assert result['libraries']['directory_name'] == 'directory'
+    assert result['libraries']['name'] == 'my_library'

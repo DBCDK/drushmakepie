@@ -67,9 +67,12 @@ version = brackets(VERSION) + EQUAL + version_number
 # Type
 types = brackets(TYPE) + EQUAL + optionallyQuoted(oneOf('theme module core profile'))('type')
 
+# Directory name
+directory_name = brackets(DIRECTORYNAME) + EQUAL + optionallyQuoted(Word(printables))('directory_name')
+
 # Project definition
 short_version = (EQUAL + version_number)('short_version')
-project_options = download | overwrite | patch | subdir | types | version | short_version
+project_options = download | overwrite | patch | subdir | types | version | short_version | directory_name
 name_only = (brackets(empty) + EQUAL + name)('name_only')
 projects = (PROJECTS + ((brackets(name) + project_options) | name_only))('projects')
 
@@ -78,7 +81,7 @@ projects = (PROJECTS + ((brackets(name) + project_options) | name_only))('projec
 destination = brackets(DESTINATION) + EQUAL + optionallyQuoted(Word(printables))('destination')
 
 # Library definition
-libraries_option = download | destination | patch
+libraries_option = download | destination | patch | directory_name
 libraries = (LIBRARIES + brackets(name) + libraries_option)('libraries')
 
 ## Grammar ##

@@ -48,3 +48,9 @@ def testVersion():
     result = projects.parseString('projects[drupal][version] = 7.17')
     assert result['projects']['version_number'] == '7.17'
     assert result['projects']['name'] == 'drupal'
+
+def testDiretoryName():
+    line = 'projects[drupal][directory_name] = directory'
+    result = projects.parseString(line)
+    assert result['projects']['directory_name'] == 'directory'
+    assert result['projects']['name'] == 'drupal'

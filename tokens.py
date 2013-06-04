@@ -21,4 +21,4 @@ TAG = Keyword('tag').suppress()
 REVISION = Keyword('revision').suppress()
 LIBRARIES = Keyword('libraries').suppress()
 DESTINATION = Keyword('destination').suppress()
-
+DIRECTORYNAME = Keyword('directory_name').suppress()
